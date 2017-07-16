@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>Com.Ericmas001.LoggingDb</id>
+        <version>$version$</version>
+        <title>Com.Ericmas001.LoggingDb</title>
+        <authors>Ericmas001</authors>
+        <licenseUrl>https://raw.githubusercontent.com/Com-Ericmas001/LoggingDb/master/LICENSE</licenseUrl>
+        <projectUrl>https://github.com/Com-Ericmas001/LoggingDb</projectUrl>
+        <requireLicenseAcceptance>true</requireLicenseAcceptance>
+        <description>Com.Ericmas001.LoggingDb</description>
+        <summary>Com.Ericmas001.LoggingDb</summary>
+        <releaseNotes>Development Version</releaseNotes>
+        <copyright />
+        <language>en</language>
+        <dependencies>
+            <dependency id="CommonServiceLocator" version="1.3" />
+            <dependency id="EntityFramework" version="6.1.3" />
+            <dependency id="Unity" version="4.0.1" />
+        </dependencies>
+    </metadata>
+    <files>
+    	<file src="Src\Com.Ericmas001.LoggingDb\bin\$configuration$\Com.Ericmas001.LoggingDb.dll" target="lib\net45\" />
+    	<file src="Src\Com.Ericmas001.LoggingDb\bin\$configuration$\Scripts\create_tables.sql" target="Scripts\" />
+    	<file src="Src\Com.Ericmas001.LoggingDb\bin\$configuration$\Scripts\drop_tables.sql" target="Scripts\" />
+    	<file src="Src\Com.Ericmas001.LoggingDb\bin\$configuration$\Scripts\Schemas.png" target="Scripts\" />
+    	<file src="Src\Com.Ericmas001.LoggingDb\bin\$configuration$\Scripts\Schemas.vsdx" target="Scripts\" />
+  </files>
+</package>

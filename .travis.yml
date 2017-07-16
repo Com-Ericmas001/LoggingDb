@@ -1,0 +1,6 @@
+language: csharp
+before_script:
+  - nuget restore Src/LoggingDb.sln
+script:
+  - xbuild /p:Configuration=Release Src/LoggingDb.sln
+  - mono Src/packages/xunit.runner.console*/tools/xunit.console.exe Src/Com.Ericmas001.LoggingDb.Test/bin/Release/Com.Ericmas001.LoggingDb.Test.dll
