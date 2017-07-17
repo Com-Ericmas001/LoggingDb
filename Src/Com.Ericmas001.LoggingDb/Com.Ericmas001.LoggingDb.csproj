@@ -69,17 +69,9 @@
     <Compile Include="ILoggingDbContext.cs" />
     <Compile Include="LoggingDbContext.cs" />
     <Compile Include="LoggingSystem.cs" />
-    <Compile Include="Services\ExceptionThrowerEmailService.cs" />
-    <Compile Include="Services\UserGroupingService.cs" />
-    <Compile Include="Services\UserRecoveryService.cs" />
-    <Compile Include="Services\ValidationService.cs" />
-    <Compile Include="Services\ManagementService.cs" />
-    <Compile Include="Services\UserManagingService.cs" />
-    <Compile Include="Services\UserConnectionService.cs" />
-    <Compile Include="Services\UserInformationService.cs" />
-    <Compile Include="Services\BCryptSecurityService.cs" />
+    <Compile Include="Services\Interfaces\ILogWriterService.cs" />
+    <Compile Include="Services\LogWriterService.cs" />
     <Compile Include="Entities\IEntityWithId.cs" />
-    <Compile Include="Services\UserObtentionService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -100,9 +92,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
