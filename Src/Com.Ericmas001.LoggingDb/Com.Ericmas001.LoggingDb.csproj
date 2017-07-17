@@ -63,6 +63,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Client.cs" />
+    <Compile Include="Entities\ExecutedCommand.cs" />
+    <Compile Include="Entities\ServiceMethod.cs" />
     <Compile Include="ILoggingDbContext.cs" />
     <Compile Include="LoggingDbContext.cs" />
     <Compile Include="LoggingSystem.cs" />
@@ -76,19 +79,8 @@
     <Compile Include="Services\UserInformationService.cs" />
     <Compile Include="Services\BCryptSecurityService.cs" />
     <Compile Include="Entities\IEntityWithId.cs" />
-    <Compile Include="Entities\UserAccessType.cs" />
-    <Compile Include="Entities\UserGroupType.cs" />
-    <Compile Include="Entities\UserGroup.cs" />
-    <Compile Include="Entities\UserSetting.cs" />
-    <Compile Include="Entities\UserRelation.cs" />
-    <Compile Include="Entities\UserRelationType.cs" />
-    <Compile Include="Entities\UserAuthentication.cs" />
     <Compile Include="Services\UserObtentionService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Entities\UserProfile.cs" />
-    <Compile Include="Entities\UserRecoveryToken.cs" />
-    <Compile Include="Entities\User.cs" />
-    <Compile Include="Entities\UserToken.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
