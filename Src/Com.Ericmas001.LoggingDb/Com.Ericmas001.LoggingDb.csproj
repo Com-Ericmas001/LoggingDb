@@ -68,7 +68,7 @@
     <Compile Include="Entities\ServiceMethod.cs" />
     <Compile Include="ILoggingDbContext.cs" />
     <Compile Include="LoggingDbContext.cs" />
-    <Compile Include="LoggingSystem.cs" />
+    <Compile Include="LoggingDbUnityConfig.cs" />
     <Compile Include="Services\Interfaces\ILogWriterService.cs" />
     <Compile Include="Services\LogWriterService.cs" />
     <Compile Include="Entities\IEntityWithId.cs" />
