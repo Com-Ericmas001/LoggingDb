@@ -5,25 +5,28 @@ using System.ServiceModel.Channels;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Routing;
 
 namespace Com.Ericmas001.LoggingDb.Util
 {
     public abstract class WebApiRequestAndResponseHandler : DelegatingHandler
     {
-        protected abstract string ExtractParams(HttpRequestMessage request, string endpoint);
+        protected abstract string ExtractBaseUrl(HttpRequestMessage request);
+        protected abstract string ExtractController(HttpRequestMessage request);
+        protected abstract string ExtractParms(HttpRequestMessage request);
         protected abstract void Log(string clientIp, string userAgent, string service, string endpoint, string httpMethod, string parms, string requestContentType, string requestBody, string responseContentType, string responseBody, string responseCode);
 
         protected override async Task<HttpResponseMessage> SendAsync(
             HttpRequestMessage request, CancellationToken cancellationToken)
         {
             var result = await base.SendAsync(request, cancellationToken);
-
+            
             try
             {
-                const string API_MARKER = "api/";
-                var url = request.RequestUri.ToString();
-                var service = url.Remove(url.IndexOf(API_MARKER, StringComparison.Ordinal) + API_MARKER.Length);
-                var endpoint = url.Substring(service.Length);
+                var service = ExtractBaseUrl(request);
+                var endpoint = ExtractController(request);
+                var parms = ExtractParms(request);
+
 
                 string requestContentType = null;
                 string requestBody = null;
@@ -45,7 +48,7 @@ namespace Com.Ericmas001.LoggingDb.Util
                     responseBody = await result.Content.ReadAsStringAsync();
                 }
 
-                Log(GetClientIp(request), request.Headers.UserAgent.ToString(), service, endpoint, request.Method.ToString(), ExtractParams(request, endpoint), requestContentType, requestBody, responseContentType, responseBody, responseCode);
+                Log(GetClientIp(request), request.Headers.UserAgent.ToString(), service, endpoint, request.Method.ToString(), parms, requestContentType, requestBody, responseContentType, responseBody, responseCode);
 
             }
             catch (Exception e)
