@@ -11,8 +11,8 @@ namespace Com.Ericmas001.LoggingDb.Entities
         [NotMapped]
         public int Id
         {
-            get { return IdClient; }
-            set { IdClient = value; }
+            get => IdClient;
+            set => IdClient = value;
         }
 
         [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]

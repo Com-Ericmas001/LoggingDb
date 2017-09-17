@@ -11,8 +11,8 @@ namespace Com.Ericmas001.LoggingDb.Entities
         [NotMapped]
         public int Id
         {
-            get { return IdServiceMethod; }
-            set { IdServiceMethod = value; }
+            get => IdServiceMethod;
+            set => IdServiceMethod = value;
         }
 
         [SuppressMessage("ReSharper", "VirtualMemberCallInContructor")]

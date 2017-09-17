@@ -10,8 +10,8 @@ namespace Com.Ericmas001.LoggingDb.Entities
         [NotMapped]
         public int Id
         {
-            get { return IdExecutedCommand; }
-            set { IdExecutedCommand = value; }
+            get => IdExecutedCommand;
+            set => IdExecutedCommand = value;
         }
 
         [Key]
@@ -20,6 +20,9 @@ namespace Com.Ericmas001.LoggingDb.Entities
 
         public int IdServiceMethod { get; set; }
         public int IdClient { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTimeOffset ExecutedTime { get; set; }
 
         public Guid? Session { get; set; }
 
