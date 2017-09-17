@@ -15,6 +15,7 @@ namespace Com.Ericmas001.LoggingDb
             Container.RegisterType<ILoggingDbContext, LoggingDbContext>();
 
             Container.RegisterType<ILogWriterService, LogWriterService>();
+            Container.RegisterType<ILogCleanerService, LogCleanerService>();
         }
     }
 }

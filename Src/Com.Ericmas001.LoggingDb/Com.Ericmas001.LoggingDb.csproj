@@ -72,7 +72,9 @@
     <Compile Include="ILoggingDbContext.cs" />
     <Compile Include="LoggingDbContext.cs" />
     <Compile Include="LoggingDbUnityConfig.cs" />
+    <Compile Include="Services\Interfaces\ILogCleanerService.cs" />
     <Compile Include="Services\Interfaces\ILogWriterService.cs" />
+    <Compile Include="Services\LogCleanerService.cs" />
     <Compile Include="Services\LogWriterService.cs" />
     <Compile Include="Entities\IEntityWithId.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
