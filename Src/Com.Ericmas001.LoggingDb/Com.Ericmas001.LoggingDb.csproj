@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Client.cs" />
+    <Compile Include="Entities\SentNotification.cs" />
     <Compile Include="Entities\ExecutedCommand.cs" />
     <Compile Include="Entities\ServiceMethod.cs" />
     <Compile Include="ILoggingDbContext.cs" />

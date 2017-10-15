@@ -52,5 +52,20 @@ namespace Com.Ericmas001.LoggingDb.Services
                 Trace.WriteLine(e.ToString());
             }
         }
+
+        public void LogNotification(bool success, string topic, string title, string message, string request, string response, string error)
+        {
+            m_DbContext.SentNotifications.Add(new SentNotification
+            {
+                Success = success,
+                Topic = topic,
+                Title = title,
+                Message = message,
+                Request = request,
+                Response = response,
+                Error = error
+            });
+            m_DbContext.SaveChanges();
+        }
     }
 }

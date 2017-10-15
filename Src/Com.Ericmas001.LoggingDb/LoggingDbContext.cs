@@ -21,6 +21,7 @@ namespace Com.Ericmas001.LoggingDb
         public virtual IDbSet<Client> Clients { get; set; }
         public virtual IDbSet<ExecutedCommand> ExecutedCommands { get; set; }
         public virtual IDbSet<ServiceMethod> ServiceMethods { get; set; }
+        public virtual IDbSet<SentNotification> SentNotifications { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

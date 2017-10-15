@@ -9,6 +9,7 @@ namespace Com.Ericmas001.LoggingDb
         IDbSet<Client> Clients { get; set; }
         IDbSet<ExecutedCommand> ExecutedCommands { get; set; }
         IDbSet<ServiceMethod> ServiceMethods { get; set; }
+        IDbSet<SentNotification> SentNotifications { get; set; }
 
         int SaveChanges();
     }

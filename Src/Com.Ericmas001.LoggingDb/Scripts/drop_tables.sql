@@ -10,6 +10,9 @@ GO
 /****** Object:  Table [dbo].[ServiceMethods]    Script Date: 2016-02-27 20:36:55 ******/
 DROP TABLE [dbo].[ServiceMethods]
 GO
+/****** Object:  Table [dbo].[SentNotifications]    Script Date: 2016-02-27 20:36:55 ******/
+DROP TABLE [dbo].[SentNotifications]
+GO
 /****** Object:  Table [dbo].[ExecutedCommands]    Script Date: 2016-02-27 20:36:55 ******/
 DROP TABLE [dbo].[ExecutedCommands]
 GO

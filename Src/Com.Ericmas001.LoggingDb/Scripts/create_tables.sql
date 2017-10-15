@@ -38,6 +38,29 @@ CREATE TABLE [dbo].[ExecutedCommands](
 )
 
 GO
+/****** Object:  Table [dbo].[SentNotifications]    Script Date: 2017-10-15 2:02:55 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[SentNotifications](
+	[IdSentNotification] [int] IDENTITY(1,1) NOT NULL,
+	[SentTime] datetimeoffset NOT NULL DEFAULT GETDATE(),
+	[Success] [bit] NOT NULL,
+	[Topic] [nvarchar](1000) NOT NULL,
+	[Title] [nvarchar](1000) NOT NULL,
+	[Message] [nvarchar](1000) NOT NULL,
+	[Request] [nvarchar](max) NULL,
+	[Response] [nvarchar](max) NULL,
+	[Error] [nvarchar](max) NULL,
+ CONSTRAINT [PK_SentNotifications] PRIMARY KEY CLUSTERED 
+(
+	[IdSentNotification] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF)
+)
+GO
 /****** Object:  Table [dbo].[ServiceMethods]    Script Date: 2016-02-27 20:36:56 ******/
 SET ANSI_NULLS ON
 GO
