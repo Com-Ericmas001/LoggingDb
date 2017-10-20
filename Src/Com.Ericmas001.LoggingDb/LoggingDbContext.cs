@@ -1,6 +1,6 @@
 using Com.Ericmas001.LoggingDb.Entities;
 using System.Data.Entity;
-using Microsoft.Practices.Unity;
+using Unity.Attributes;
 
 // ReSharper disable All
 namespace Com.Ericmas001.LoggingDb

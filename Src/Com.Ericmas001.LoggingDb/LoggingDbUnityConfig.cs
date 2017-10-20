@@ -1,6 +1,6 @@
 ﻿using Com.Ericmas001.LoggingDb.Services;
 using Com.Ericmas001.LoggingDb.Services.Interfaces;
-using Microsoft.Practices.Unity;
+using Unity;
 
 namespace Com.Ericmas001.LoggingDb
 {
