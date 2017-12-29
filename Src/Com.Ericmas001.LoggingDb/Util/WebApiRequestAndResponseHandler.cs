@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
@@ -23,9 +24,36 @@ namespace Com.Ericmas001.LoggingDb.Util
             
             try
             {
-                var service = ExtractBaseUrl(request);
-                var endpoint = ExtractController(request);
-                var parms = ExtractParms(request);
+                var service = "Unknown";
+                var endpoint = "Unknown"; 
+                var parms = "Unknown"; 
+
+                try
+                {
+                    service = ExtractBaseUrl(request);
+                }
+                catch
+                {
+                    //Do nothing
+                }
+
+                try
+                {
+                    endpoint = ExtractController(request);
+                }
+                catch
+                {
+                    //Do nothing
+                }
+
+                try
+                {
+                    parms = ExtractParms(request);
+                }
+                catch
+                {
+                    //Do nothing
+                }
 
 
                 string requestContentType = null;
@@ -56,7 +84,17 @@ namespace Com.Ericmas001.LoggingDb.Util
                         responseBody = await result.Content.ReadAsStringAsync();
                 }
 
-                Log(GetClientIp(request), request.Headers.UserAgent.ToString(), service, endpoint, request.Method.ToString(), parms, requestContentType, requestBody, responseContentType, responseBody, responseCode);
+                var clientIp = GetClientIp(request);
+                var ip = string.IsNullOrEmpty(clientIp) ? "Unknown" : clientIp;
+                if (ip.Length > 100)
+                    ip = ip.Remove(100);
+
+                var userAgent = request.Headers.UserAgent.ToString();
+                var ag = string.IsNullOrEmpty(userAgent) ? "Unknown" : userAgent;
+                if (ag.Length > 4000)
+                    ag = ag.Remove(4000);
+
+                Log(ip, ag, service, endpoint, request.Method.ToString(), parms, requestContentType, requestBody, responseContentType, responseBody, responseCode);
 
             }
             catch (Exception e)
@@ -70,6 +108,11 @@ namespace Com.Ericmas001.LoggingDb.Util
         protected virtual void OnLogException(Exception e)
         {
             Trace.WriteLine(e.ToString());
+            var exception = e as DbEntityValidationException;
+            if (exception != null)
+            {
+                Trace.WriteLine(string.Join("; ", exception.EntityValidationErrors.SelectMany(x => x.ValidationErrors).Select(x => x.ErrorMessage)));
+            }
         }
 
         private string GetClientIp(HttpRequestMessage request)
