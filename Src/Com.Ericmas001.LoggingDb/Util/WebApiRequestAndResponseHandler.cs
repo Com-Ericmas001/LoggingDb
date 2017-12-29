@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.ServiceModel.Channels;
 using System.Threading;
@@ -33,8 +34,14 @@ namespace Com.Ericmas001.LoggingDb.Util
                 {
                     if (request.Content.Headers?.ContentType != null)
                         requestContentType = request.Content.Headers.ContentType.ToString();
+
                     request.Content.ReadAsStreamAsync().Result.Seek(0, System.IO.SeekOrigin.Begin);
-                    requestBody = await request.Content.ReadAsStringAsync();
+                    if (requestContentType != null && requestContentType.Contains("multipart/form-data"))
+                    {
+                        requestBody = string.Join(" ", HttpContext.Current.Request.Files.AllKeys.Select(x => $"[File {HttpContext.Current.Request.Files[x].FileName}: {HttpContext.Current.Request.Files[x].ContentLength / 1024.0:#.0} KB]"));
+                    }
+                    else
+                        requestBody = await request.Content.ReadAsStringAsync();
                 }
 
                 string responseContentType = null;
@@ -44,7 +51,9 @@ namespace Com.Ericmas001.LoggingDb.Util
                 {
                     if (result.Content.Headers?.ContentType != null)
                         responseContentType = result.Content.Headers.ContentType.ToString();
-                    responseBody = await result.Content.ReadAsStringAsync();
+
+                    if (responseContentType == null || !responseContentType.Contains("multipart/form-data"))
+                        responseBody = await result.Content.ReadAsStringAsync();
                 }
 
                 Log(GetClientIp(request), request.Headers.UserAgent.ToString(), service, endpoint, request.Method.ToString(), parms, requestContentType, requestBody, responseContentType, responseBody, responseCode);
