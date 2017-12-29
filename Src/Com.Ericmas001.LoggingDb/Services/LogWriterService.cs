@@ -17,40 +17,32 @@ namespace Com.Ericmas001.LoggingDb.Services
 
         public void LogExecutedCommand(string clientIp, string clientUserAgent, string serviceName, string controllerName, string methodName, string parms, string requestContentType, string requestData, string responseContentType, string responseData, string responseCode)
         {
-            try
+            var service = m_DbContext.ServiceMethods.FirstOrDefault(x => x.ServiceName == serviceName && x.ControllerName == controllerName && x.MethodName == methodName) ?? new ServiceMethod
             {
-                var service = m_DbContext.ServiceMethods.FirstOrDefault(x => x.ServiceName == serviceName && x.ControllerName == controllerName && x.MethodName == methodName) ?? new ServiceMethod
-                {
-                    ServiceName = serviceName,
-                    ControllerName = controllerName,
-                    MethodName = methodName
-                };
+                ServiceName = serviceName,
+                ControllerName = controllerName,
+                MethodName = methodName
+            };
 
-                var client = m_DbContext.Clients.FirstOrDefault(x => x.IpAddress == clientIp && x.UserAgent == clientUserAgent) ?? new Client
-                {
-                    IpAddress = clientIp,
-                    UserAgent = clientUserAgent
-                };
-
-                m_DbContext.ExecutedCommands.Add(new ExecutedCommand
-                {
-                    ServiceMethod = service,
-                    Client = client,
-                    Parms = parms,
-                    RequestContentType = requestContentType,
-                    RequestData = requestData,
-                    ResponseContentType = responseContentType,
-                    ResponseData = responseData,
-                    ResponseCode = responseCode
-                });
-
-                m_DbContext.SaveChanges();
-
-            }
-            catch (Exception e)
+            var client = m_DbContext.Clients.FirstOrDefault(x => x.IpAddress == clientIp && x.UserAgent == clientUserAgent) ?? new Client
             {
-                Trace.WriteLine(e.ToString());
-            }
+                IpAddress = clientIp,
+                UserAgent = clientUserAgent
+            };
+
+            m_DbContext.ExecutedCommands.Add(new ExecutedCommand
+            {
+                ServiceMethod = service,
+                Client = client,
+                Parms = parms,
+                RequestContentType = requestContentType,
+                RequestData = requestData,
+                ResponseContentType = responseContentType,
+                ResponseData = responseData,
+                ResponseCode = responseCode
+            });
+
+            m_DbContext.SaveChanges();
         }
 
         public void LogNotification(bool success, string topic, string title, string message, string request, string response, string error)

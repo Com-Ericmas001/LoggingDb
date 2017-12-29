@@ -61,10 +61,15 @@ namespace Com.Ericmas001.LoggingDb.Util
             }
             catch (Exception e)
             {
-                Trace.WriteLine(e.ToString());
+                OnLogException(e);
             }
 
             return result;
+        }
+
+        protected virtual void OnLogException(Exception e)
+        {
+            Trace.WriteLine(e.ToString());
         }
 
         private string GetClientIp(HttpRequestMessage request)
@@ -78,7 +83,7 @@ namespace Com.Ericmas001.LoggingDb.Util
             }
             if (HttpContext.Current != null)
                 return HttpContext.Current.Request.UserHostAddress;
-            return null;
+            return "Unknown";
         }
     }
 }
