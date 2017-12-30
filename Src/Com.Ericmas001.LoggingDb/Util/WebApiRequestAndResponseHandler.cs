@@ -24,36 +24,42 @@ namespace Com.Ericmas001.LoggingDb.Util
             
             try
             {
-                var service = "Unknown";
-                var endpoint = "Unknown"; 
-                var parms = "Unknown"; 
+                string service;
+                string endpoint;
+                string parms; 
 
                 try
                 {
                     service = ExtractBaseUrl(request);
                 }
-                catch
+                catch(Exception e)
                 {
-                    //Do nothing
+                    service = e.ToString();
                 }
+                if (service.Length > 200)
+                    service = service.Remove(200);
 
                 try
                 {
                     endpoint = ExtractController(request);
                 }
-                catch
+                catch (Exception e)
                 {
-                    //Do nothing
+                    endpoint = e.ToString();
                 }
+                if (endpoint.Length > 100)
+                    endpoint = endpoint.Remove(100);
 
                 try
                 {
                     parms = ExtractParms(request);
                 }
-                catch
+                catch (Exception e)
                 {
-                    //Do nothing
+                    parms = e.ToString();
                 }
+                if (parms.Length > 2000)
+                    parms = parms.Remove(2000);
 
 
                 string requestContentType = null;
