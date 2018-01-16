@@ -1,28 +1,48 @@
 ﻿using System;
 using System.Linq;
 using Com.Ericmas001.LoggingDb.Services.Interfaces;
+using Com.Ericmas001.LoggingDb.Util;
 
 namespace Com.Ericmas001.LoggingDb.Services
 {
     public class LogCleanerService : ILogCleanerService
     {
         private readonly ILoggingDbContext m_LogDbContext;
+        private readonly ILoggingExecutionLogService m_ExecutionLogService;
 
-        public LogCleanerService(ILoggingDbContext logDbContext)
+        public LogCleanerService(ILoggingDbContext logDbContext, ILoggingExecutionLogService executionLogService)
         {
             m_LogDbContext = logDbContext;
+            m_ExecutionLogService = executionLogService;
         }
 
         public int RemoveLogsOlderThan(DateTime minDate)
         {
             m_LogDbContext.SetCommandTimeout(3600);
-            var logsToRemove = m_LogDbContext.ExecutedCommands.Where(x => x.ExecutedTime < minDate).ToArray();
 
-            foreach (var log in logsToRemove)
-                m_LogDbContext.ExecutedCommands.Remove(log);
+            m_ExecutionLogService.Log($"=================================================================");
+            m_ExecutionLogService.Log($"Deleting logs older than {minDate:yyyy-MM-dd HH:mm:ss}");
+            var nbResults = m_LogDbContext.ExecutedCommands.Count();
+            var resultsInRange = m_LogDbContext.ExecutedCommands.Where(x => x.ExecutedTime < minDate).Select(x => x.IdExecutedCommand).ToArray();
+            var nbResultsInRange = resultsInRange.Length;
+            m_ExecutionLogService.Log($"{nbResultsInRange} of {nbResults} log entries are older than {minDate:yyyy-MM-dd HH:mm:ss} ...");
+            var logsToRemove = m_LogDbContext.ExecutedCommands.Where(x => x.ExecutedTime < minDate).Select(x => x.IdExecutedCommand).ToArray();
+            var i = 0;
+            foreach (var c in resultsInRange)
+            {
+                m_LogDbContext.ExecutedCommands.Remove(m_LogDbContext.ExecutedCommands.Find(c));
+                i++;
+                if (i % 50 == 0)
+                {
+                    m_ExecutionLogService.Log($"{i} / {nbResultsInRange} log entries deleted ({(i * 100.0 / nbResultsInRange):0.00}%)");
+                    m_LogDbContext.SaveChanges();
+                }
+            }
 
             m_LogDbContext.SaveChanges();
+            m_ExecutionLogService.Log($"The logs were deleted successfully !!");
 
+            m_ExecutionLogService.Log($"=================================================================");
             return logsToRemove.Length;
         }
 

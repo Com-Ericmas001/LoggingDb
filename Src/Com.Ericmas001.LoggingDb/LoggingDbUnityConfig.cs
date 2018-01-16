@@ -1,5 +1,6 @@
 ﻿using Com.Ericmas001.LoggingDb.Services;
 using Com.Ericmas001.LoggingDb.Services.Interfaces;
+using Com.Ericmas001.LoggingDb.Util;
 using Unity;
 
 namespace Com.Ericmas001.LoggingDb
@@ -16,6 +17,8 @@ namespace Com.Ericmas001.LoggingDb
 
             Container.RegisterType<ILogWriterService, LogWriterService>();
             Container.RegisterType<ILogCleanerService, LogCleanerService>();
+
+            Container.RegisterType<ILoggingExecutionLogService, NoLoggingExecutionLogService>();
         }
     }
 }

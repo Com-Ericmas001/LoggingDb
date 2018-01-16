@@ -76,6 +76,9 @@
     <Compile Include="Services\LogWriterService.cs" />
     <Compile Include="Entities\IEntityWithId.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\ConsoleExecutionLogService.cs" />
+    <Compile Include="Util\IExecutionLogService.cs" />
+    <Compile Include="Util\NoExecutionLogService.cs" />
     <Compile Include="Util\WebApiRequestAndResponseHandler.cs" />
   </ItemGroup>
   <ItemGroup>
