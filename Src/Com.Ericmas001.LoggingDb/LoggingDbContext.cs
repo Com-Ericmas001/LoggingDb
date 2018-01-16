@@ -1,5 +1,6 @@
 using Com.Ericmas001.LoggingDb.Entities;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using Unity.Attributes;
 
 // ReSharper disable All
@@ -22,6 +23,11 @@ namespace Com.Ericmas001.LoggingDb
         public virtual IDbSet<ExecutedCommand> ExecutedCommands { get; set; }
         public virtual IDbSet<ServiceMethod> ServiceMethods { get; set; }
         public virtual IDbSet<SentNotification> SentNotifications { get; set; }
+        public void SetCommandTimeout(int value)
+        {
+            var objectContext = (this as IObjectContextAdapter).ObjectContext;
+            objectContext.CommandTimeout = value;
+        }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

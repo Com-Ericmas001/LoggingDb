@@ -12,5 +12,6 @@ namespace Com.Ericmas001.LoggingDb
         IDbSet<SentNotification> SentNotifications { get; set; }
 
         int SaveChanges();
+        void SetCommandTimeout(int value);
     }
 }

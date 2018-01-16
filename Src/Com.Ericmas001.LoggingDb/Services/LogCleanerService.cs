@@ -15,6 +15,7 @@ namespace Com.Ericmas001.LoggingDb.Services
 
         public int RemoveLogsOlderThan(DateTime minDate)
         {
+            m_LogDbContext.SetCommandTimeout(3600);
             var logsToRemove = m_LogDbContext.ExecutedCommands.Where(x => x.ExecutedTime < minDate).ToArray();
 
             foreach (var log in logsToRemove)
@@ -27,6 +28,7 @@ namespace Com.Ericmas001.LoggingDb.Services
 
         public int RemoveUnusedClients()
         {
+            m_LogDbContext.SetCommandTimeout(3600);
             var clientsToRemove = m_LogDbContext.Clients.Where(x => !x.ExecutedCommands.Any()).ToArray();
 
             foreach (var c in clientsToRemove)
@@ -39,6 +41,7 @@ namespace Com.Ericmas001.LoggingDb.Services
 
         public int RemoveUnusedServices()
         {
+            m_LogDbContext.SetCommandTimeout(3600);
             var servicesToRemove = m_LogDbContext.ServiceMethods.Where(x => !x.ExecutedCommands.Any()).ToArray();
 
             foreach (var s in servicesToRemove)
