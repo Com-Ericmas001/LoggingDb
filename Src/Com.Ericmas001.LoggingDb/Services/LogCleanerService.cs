@@ -27,9 +27,12 @@ namespace Com.Ericmas001.LoggingDb.Services
             while (resultsInRange.Any())
             {
                 var nbResultsInRange = resultsInRange.Length;
-                m_ExecutionLogService.Log($"Deleting {nbResultsInRange} log entries are older than {minDate:yyyy-MM-dd HH:mm:ss} ...");
+
+                foreach (var c in resultsInRange)
+                    m_LogDbContext.ExecutedCommands.Remove(m_LogDbContext.ExecutedCommands.Find(c));
+
                 treated += nbResultsInRange;
-                m_ExecutionLogService.Log($"Total of logs deleted: {treated}");
+                m_ExecutionLogService.Log($"{nbResultsInRange} log entries deleted ! Total : {treated}");
                 m_LogDbContext.SaveChanges();
             }
 
