@@ -29,11 +29,16 @@ namespace Com.Ericmas001.LoggingDb.Services
                 var nbResultsInRange = resultsInRange.Length;
 
                 foreach (var c in resultsInRange)
-                    m_LogDbContext.ExecutedCommands.Remove(m_LogDbContext.ExecutedCommands.Find(c));
+                {
+                    var entity = m_LogDbContext.ExecutedCommands.Find(c);
+                    m_LogDbContext.ExecutedCommands.Remove(entity);
+                }
 
                 treated += nbResultsInRange;
                 m_ExecutionLogService.Log($"{nbResultsInRange} log entries deleted ! Total : {treated}");
                 m_LogDbContext.SaveChanges();
+
+                resultsInRange = m_LogDbContext.ExecutedCommands.Where(x => x.ExecutedTime < minDate).Select(x => x.IdExecutedCommand).Take(50).ToArray();
             }
 
             m_LogDbContext.SaveChanges();
