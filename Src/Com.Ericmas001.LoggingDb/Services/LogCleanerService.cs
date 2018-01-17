@@ -22,28 +22,22 @@ namespace Com.Ericmas001.LoggingDb.Services
 
             m_ExecutionLogService.Log($"=================================================================");
             m_ExecutionLogService.Log($"Deleting logs older than {minDate:yyyy-MM-dd HH:mm:ss}");
-            var nbResults = m_LogDbContext.ExecutedCommands.Count();
-            var resultsInRange = m_LogDbContext.ExecutedCommands.Where(x => x.ExecutedTime < minDate).Select(x => x.IdExecutedCommand).ToArray();
-            var nbResultsInRange = resultsInRange.Length;
-            m_ExecutionLogService.Log($"{nbResultsInRange} of {nbResults} log entries are older than {minDate:yyyy-MM-dd HH:mm:ss} ...");
-            var logsToRemove = m_LogDbContext.ExecutedCommands.Where(x => x.ExecutedTime < minDate).Select(x => x.IdExecutedCommand).ToArray();
-            var i = 0;
-            foreach (var c in resultsInRange)
+            var resultsInRange = m_LogDbContext.ExecutedCommands.Where(x => x.ExecutedTime < minDate).Select(x => x.IdExecutedCommand).Take(50).ToArray();
+            var treated = 0;
+            while (resultsInRange.Any())
             {
-                m_LogDbContext.ExecutedCommands.Remove(m_LogDbContext.ExecutedCommands.Find(c));
-                i++;
-                if (i % 50 == 0)
-                {
-                    m_ExecutionLogService.Log($"{i} / {nbResultsInRange} log entries deleted ({(i * 100.0 / nbResultsInRange):0.00}%)");
-                    m_LogDbContext.SaveChanges();
-                }
+                var nbResultsInRange = resultsInRange.Length;
+                m_ExecutionLogService.Log($"Deleting {nbResultsInRange} log entries are older than {minDate:yyyy-MM-dd HH:mm:ss} ...");
+                treated += nbResultsInRange;
+                m_ExecutionLogService.Log($"Total of logs deleted: {treated}");
+                m_LogDbContext.SaveChanges();
             }
 
             m_LogDbContext.SaveChanges();
-            m_ExecutionLogService.Log($"The logs were deleted successfully !!");
+            m_ExecutionLogService.Log($"All The logs were deleted successfully !!");
 
             m_ExecutionLogService.Log($"=================================================================");
-            return logsToRemove.Length;
+            return treated;
         }
 
         public int RemoveUnusedClients()
